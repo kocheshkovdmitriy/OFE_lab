@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+    <title>{% block title %}Заголовок страницы{% endblock%}</title>
+</head>
+<body>
+
+    <nav class="menu">
+        <div class="group">
+            <img class="logo" src="{% static 'image/logo.png' %}" alt="Логотип">
+            <div class="group1">
+                <a href="#">Главная</a>
+                <a href="#">О Проекте</a>
+                <a href="#">Каталог заданий</a>
+                <a href="#">Редактор</a>
+            </div>
+        </div>
+    </nav>
+    <div class="main-container">
+        <div class="left-panel">
+            {% block left_panel%}
+                боковая панель
+            {% endblock%}
+        </div>
+        <div>
+            {% block content%}
+                Тут будет содержание страницы
+            {% endblock%}
+        </div>
+
+    </div>
+
+</body>
+</html>

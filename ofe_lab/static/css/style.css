@@ -1,0 +1,42 @@
+.menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: gray;
+    min-width: 100%;
+    height: 50px;
+    background-size: 100% 100%;
+    background-position: left center;
+    }
+
+.group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.group1 {
+    display: flex;
+    align-items: center;
+}
+.logo {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    }
+
+.group a{
+    margin-right: 25px;
+    }
+
+
+.main-container{
+    display: flex;
+}
+
+.left-panel{
+    min-width: 25vh;
+    max-width: 25vh;
+    background-color: #20B2AA;
+    min-height: 100vh;
+}
