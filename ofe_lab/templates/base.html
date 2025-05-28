@@ -11,12 +11,16 @@
 
     <nav class="menu">
         <div class="group">
-            <img class="logo" src="{% static 'image/logo.png' %}" alt="Логотип">
+            <img class="logo" src="{% static 'image/site_logo.png' %}" alt="Логотип">
             <div class="group1">
-                <a href="#">Главная</a>
-                <a href="#">О Проекте</a>
-                <a href="#">Каталог заданий</a>
-                <a href="#">Редактор</a>
+                <a href="#">Инструкции</a>
+                <a href="{% url 'lab:all5class' %}">5 класс</a>
+                <a href="{% url 'lab:all6class' %}">6 класс</a>
+                <a href="{% url 'lab:all7class' %}">7 класс</a>
+                <a href="{% url 'lab:all8class' %}">8 класс</a>
+                <a href="{% url 'lab:all9class' %}">9 класс</a>
+                <a href="{% url 'lab:all10class' %}">10 класс</a>
+                <a href="{% url 'lab:all11class' %}">11 класс</a>
             </div>
         </div>
     </nav>
