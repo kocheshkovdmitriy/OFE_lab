@@ -13,5 +13,6 @@ urlpatterns = [
     path('/class9', views.Lab9Class.as_view(), name='all9class'),
     path('/class10', views.Lab10Class.as_view(), name='all10class'),
     path('/class11', views.Lab11Class.as_view(), name='all11class'),
+    path('/allworks', views.AllWorks.as_view(), name='allworks'),
     #path('about/', views.About.as_view(), name='about'),
     ]
