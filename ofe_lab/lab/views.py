@@ -19,6 +19,9 @@ class AllWorks(generic.ListView):
         print(qs)
         return qs
 
+    def get_context_data(self, **kwargs):
+        return super(AllWorks, self).get_context_data(grade=self.request.GET['grade'])
+
 class Work(generic.DetailView):
     template_name = 'lab/9/9-1.html'
     context_object_name = 'work'

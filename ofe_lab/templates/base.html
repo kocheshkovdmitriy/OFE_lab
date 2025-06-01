@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
-    <title>{% block title %}Заголовок страницы{% endblock%}</title>
+    <title>{% block title %} {% endblock%}</title>
 </head>
 <body>
 
     <nav class="menu">
         <div class="group">
-            <img class="logo" src="{% static 'image/site_logo.png' %}" alt="Логотип">
+            <a href="{% url 'lab:mainpage' %}"><img class="logo" src="{% static 'image/site_logo.png' %}" alt="Логотип"></a>
             <div class="group1">
                 <a href="#">Справочник</a>
                 <a href="{% url 'lab:allworks' %}?grade=5">5 класс</a>
@@ -27,12 +27,12 @@
     <div class="main-container">
         <div class="left-panel">
             {% block left_panel%}
-                боковая панель
+
             {% endblock%}
         </div>
         <div>
             {% block content%}
-                Тут будет содержание страницы
+
             {% endblock%}
         </div>
 
