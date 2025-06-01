@@ -7,5 +7,5 @@ app_name = 'lab'
 urlpatterns = [
     path('', views.Mainpage.as_view(), name='mainpage'),
     path('/allworks', views.AllWorks.as_view(), name='allworks'),
-    #path('about/', views.About.as_view(), name='about'),
+    path('work/<pk>/', views.Work.as_view(), name='work'),
     ]

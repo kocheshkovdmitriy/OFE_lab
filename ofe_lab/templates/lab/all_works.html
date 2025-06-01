@@ -11,9 +11,12 @@
     <h1>МБОУ "ЛИЦЕЙ №40"</h1>
     {% if works %}
         {% for work in works %}
-            <p>{{ forloop.counter }}: {{ work.grade }}-{{ work.number }} {{work.name}}</p>
+            <p>{{ forloop.counter }}: <a href="{% url 'lab:work' pk=work.pk%}">{{ work.grade }}-{{ work.number }} {{work.name}}</a></p>
         {% endfor %}
     {% else %}
+        <p>По данному классу пока не найдено ни одной готовой лабораторной работы. Возможно они когда нибудь будут добавлены!!!
+        <br><b>А пока вот прикольная картинка)))</p>
+        <p><img class="main-img" src="{% static 'image/ggggggggggg.jpg' %}" alt="Класная картинка"></p>
     {% endif %}
     <a href="{% url 'lab:mainpage' %}">вернуться на главную</a>
 {% endblock%}

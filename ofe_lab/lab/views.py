@@ -19,3 +19,8 @@ class AllWorks(generic.ListView):
         print(qs)
         return qs
 
+class Work(generic.DetailView):
+    template_name = 'lab/9/9-1.html'
+    context_object_name = 'work'
+    model = models.Work
+
