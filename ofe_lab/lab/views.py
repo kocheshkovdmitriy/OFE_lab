@@ -16,5 +16,6 @@ class AllWorks(generic.ListView):
     def get_queryset(self):
         print(int(self.request.GET['grade']))
         qs = models.Work.objects.filter(grade=int(self.request.GET['grade']))
+        print(qs)
         return qs
 

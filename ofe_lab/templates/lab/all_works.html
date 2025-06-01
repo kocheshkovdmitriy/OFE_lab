@@ -9,7 +9,11 @@
 
 {% block content%}
     <h1>МБОУ "ЛИЦЕЙ №40"</h1>
-    <h3>тут наверное когда то будет список лабораторных работ</h3>
-    <img class="main-img" src="{% static 'image/mainpage.jpg' %}" alt="Класная картинка"><br>
+    {% if works %}
+        {% for work in works %}
+            <p>{{ forloop.counter }}: {{ work.grade }}-{{ work.number }} {{work.name}}</p>
+        {% endfor %}
+    {% else %}
+    {% endif %}
     <a href="{% url 'lab:mainpage' %}">вернуться на главную</a>
 {% endblock%}
