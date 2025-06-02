@@ -3,6 +3,8 @@ from django.views import generic
 
 from lab import models
 
+from lab.form import UploadFileForm
+
 
 class Mainpage(generic.TemplateView):
     template_name = 'lab/main_page.html'
@@ -27,3 +29,14 @@ class Work(generic.DetailView):
     def get_template_names(self):
         w = models.Work.objects.filter(id=int(self.request.GET['id'])).first()
         return [f'lab/{w.grade}/{w.url}']
+
+    def get_context_data(self, **kwargs):
+        form = UploadFileForm()
+        return super(Work, self).get_context_data(form=form)
+    def post(self, *args, **kwargs):
+        work = models.Work.objects.get(id=kwargs['pk'])
+        form = UploadFileForm(self.request.POST, self.request.FILES)
+        context = {'work': work, 'result': True, 'form': form}
+        return render(request=self.request,
+                      template_name=f'lab/{work.grade}/{work.url}',
+                      context=context)
