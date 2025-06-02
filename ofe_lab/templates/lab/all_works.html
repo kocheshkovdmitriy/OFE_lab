@@ -11,7 +11,7 @@
     <h1>МБОУ "ЛИЦЕЙ №40"</h1>
     {% if works %}
         {% for work in works %}
-            <p>{{ forloop.counter }}: <a href="{% url 'lab:work' pk=work.pk%}">{{ work.grade }}-{{ work.number }} {{work.name}}</a></p>
+            <p>{{ forloop.counter }}: <a href="{% url 'lab:work' pk=work.pk%}?id={{work.pk}}">{{ work.grade }}-{{ work.number }} {{work.name}}</a></p>
         {% endfor %}
     {% else %}
         <p>По данному классу пока не найдено ни одной готовой лабораторной работы. Возможно они когда нибудь будут добавлены!!!
