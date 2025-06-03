@@ -13,3 +13,14 @@ class Work(models.Model):
     class Meta:
         verbose_name = 'Лабораторная работа'
         verbose_name_plural = 'Лабораторные работы'
+
+class Decision(models.Model):
+    work = models.ForeignKey(Work, verbose_name='Лабораторная работа', on_delete=models.CASCADE, related_name='decisions')
+    author = models.CharField(max_length=100, verbose_name='автор')
+    name = models.CharField(max_length=100)
+    file = models.FileField(upload_to='uploads/')
+    time_create = models.DateTimeField(auto_now_add=True, verbose_name='Сдано')
+
+    class Meta:
+        verbose_name = 'Отчет по лабораторной работе'
+        verbose_name_plural = 'Отчеты по лабораторной работе'
