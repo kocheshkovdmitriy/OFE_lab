@@ -33,9 +33,15 @@ class Work(generic.DetailView):
     def get_context_data(self, **kwargs):
         form = UploadFileForm()
         return super(Work, self).get_context_data(form=form)
+
     def post(self, *args, **kwargs):
         work = models.Work.objects.get(id=kwargs['pk'])
         form = UploadFileForm(self.request.POST, self.request.FILES)
+        if form.is_valid():
+            author = self.request.POST['author']
+            file = self.request.FILES['file']
+            decision = models.Decision(work=work, author=author, file=file)
+            decision.save()
         context = {'work': work, 'result': True, 'form': form}
         return render(request=self.request,
                       template_name=f'lab/{work.grade}/{work.url}',
