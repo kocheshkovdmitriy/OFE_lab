@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views import generic
+from django.core.files.storage import FileSystemStorage
 
 from lab import models
 
@@ -40,6 +41,7 @@ class Work(generic.DetailView):
         if form.is_valid():
             author = self.request.POST['author']
             file = self.request.FILES['file']
+            file.name = '1' + file.name
             decision = models.Decision(work=work, author=author, file=file)
             decision.save()
         context = {'work': work, 'result': True, 'form': form}
