@@ -24,3 +24,4 @@ class Decision(models.Model):
     class Meta:
         verbose_name = 'Отчет по лабораторной работе'
         verbose_name_plural = 'Отчеты по лабораторной работе'
+

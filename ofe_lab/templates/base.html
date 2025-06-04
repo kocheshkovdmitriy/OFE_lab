@@ -23,6 +23,13 @@
                 <a href="{% url 'lab:allworks' %}?grade=11">11 класс</a>
             </div>
         </div>
+         <div class="group">
+            {% if request.user.is_authenticated %}
+                <p>Преподаватель | <a href="{% url 'lab:logout' %}">выйти</a></p>
+            {% else %}
+                <p>Ученик | <a href="{% url 'lab:login' %}">войти как преподадвтель</a></p>
+            {% endif %}
+        </div>
     </nav>
     <div class="main-container">
         <div class="left-panel">

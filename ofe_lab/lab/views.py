@@ -1,10 +1,11 @@
-from django.shortcuts import render
+from django.contrib.auth import logout, login, authenticate
+from django.shortcuts import render, redirect
 from django.views import generic
 from django.core.files.storage import FileSystemStorage
 
 from lab import models
 
-from lab.form import UploadFileForm
+from lab import forms
 
 
 class Mainpage(generic.TemplateView):
@@ -32,12 +33,12 @@ class Work(generic.DetailView):
         return [f'lab/{w.grade}/{w.url}']
 
     def get_context_data(self, **kwargs):
-        form = UploadFileForm()
+        form = forms.UploadFileForm()
         return super(Work, self).get_context_data(form=form)
 
     def post(self, *args, **kwargs):
         work = models.Work.objects.get(id=kwargs['pk'])
-        form = UploadFileForm(self.request.POST, self.request.FILES)
+        form = forms.UploadFileForm(self.request.POST, self.request.FILES)
         if form.is_valid():
             author = self.request.POST['author']
             file = self.request.FILES['file']
@@ -47,3 +48,31 @@ class Work(generic.DetailView):
         return render(request=self.request,
                       template_name=f'lab/{work.grade}/{work.url}',
                       context=context)
+
+class LoginView(generic.View):
+    def get(self, request):
+        form = forms.AuthUser()
+        context = {'form': form}
+        return render(request, 'lab/auth_user.html', context=context)
+
+    def post(self, request):
+        form = forms.AuthUser(request.POST)
+        if form.is_valid():
+            username = 'teacher'
+            password = form.cleaned_data['password']
+            user = authenticate(username=username, password=password)
+            if user:
+                if user.is_active:
+                    login(request, user)
+                    return redirect('/')
+                else:
+                    form.add_error('__all__', 'Учетная запись не активна.')
+            else:
+                form.add_error('__all__', 'Неверно введены имя пользователя или пароль.')
+        context = {'form': form}
+        return render(request, 'lab/auth_user.html', context=context)
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('/')
