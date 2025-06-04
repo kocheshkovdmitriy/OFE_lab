@@ -12,7 +12,7 @@
     {% if request.user.is_authenticated %}
         {% if decisions %}
             {% for decision in decisions %}
-                <p>{{ forloop.counter }}: <a href="#">{{ decision.author }}: файл"{{ decision.get_file_name }}"</a></p>
+                <p>{{ forloop.counter }}: <a href="{% url 'lab:decision/download' pk=decision.id %}">{{ decision.author }}: файл"{{ decision.get_file_name }}"</a></p>
             {% endfor %}
         {% else %}
             <p>По данной лабораторной пока не было отправлено ни одного отчета!!!

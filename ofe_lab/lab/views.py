@@ -1,5 +1,6 @@
 from django.contrib.auth import logout, login, authenticate
-from django.shortcuts import render, redirect
+from django.http import FileResponse
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import generic
 from django.core.files.storage import FileSystemStorage
 
@@ -80,6 +81,10 @@ class Decisions_work(generic.ListView):
     def get_queryset(self):
         qs = models.Decision.objects.filter(work_id=int(self.request.GET['id']))
         return qs
+
+def download_file_view(request, pk):
+    object = get_object_or_404(models.Decision, pk)
+    return FileResponse(object.file.open(), as_attachment=True, filename=object.file.name)
 
 
 def logout_view(request):
