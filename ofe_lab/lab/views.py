@@ -72,6 +72,15 @@ class LoginView(generic.View):
         context = {'form': form}
         return render(request, 'lab/auth_user.html', context=context)
 
+class Decisions_work(generic.ListView):
+    template_name = 'lab/decisions_work.html'
+    context_object_name = 'decisions'
+    model = models.Decision
+
+    def get_queryset(self):
+        qs = models.Decision.objects.filter(work_id=int(self.request.GET['id']))
+        return qs
+
 
 def logout_view(request):
     logout(request)

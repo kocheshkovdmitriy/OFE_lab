@@ -21,7 +21,9 @@ class Decision(models.Model):
     file = models.FileField(upload_to='uploads/')
     time_create = models.DateTimeField(auto_now_add=True, verbose_name='Сдано')
 
+    def get_file_name(self):
+        return self.file.name[8:]
+
     class Meta:
         verbose_name = 'Отчет по лабораторной работе'
         verbose_name_plural = 'Отчеты по лабораторной работе'
-
