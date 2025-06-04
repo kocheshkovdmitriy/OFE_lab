@@ -83,7 +83,7 @@ class Decisions_work(generic.ListView):
         return qs
 
 def download_file_view(request, pk):
-    object = get_object_or_404(models.Decision, pk)
+    object = models.Decision.objects.get(id=pk)
     return FileResponse(object.file.open(), as_attachment=True, filename=object.file.name)
 
 
