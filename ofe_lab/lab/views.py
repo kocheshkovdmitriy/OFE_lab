@@ -73,17 +73,17 @@ class LoginView(generic.View):
         context = {'form': form}
         return render(request, 'lab/auth_user.html', context=context)
 
-class Decisions_work(generic.ListView):
+class Protocols_work(generic.ListView):
     template_name = 'lab/decisions_work.html'
     context_object_name = 'decisions'
-    model = models.Decision
+    model = models.Protocol
 
     def get_queryset(self):
-        qs = models.Decision.objects.filter(work_id=int(self.request.GET['id']))
+        qs = models.Protocol.objects.filter(work_id=int(self.request.GET['id']))
         return qs
 
 def download_file_view(request, pk):
-    object = models.Decision.objects.get(id=pk)
+    object = models.Protocol.objects.get(id=pk)
     return FileResponse(object.file.open(), as_attachment=True, filename=object.file.name)
 
 
