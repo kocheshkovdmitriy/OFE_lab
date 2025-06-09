@@ -10,9 +10,14 @@
 {% block content%}
     <h1>МБОУ "ЛИЦЕЙ №40"</h1>
     {% if request.user.is_authenticated %}
+        <h3>Сданные отчеты по лабораторной работе "{{decisions.first.work.name}}"</h3>
         {% if decisions %}
             {% for decision in decisions %}
-                <p>{{ forloop.counter }}: <a href="{% url 'lab:download' pk=decision.id %}">{{ decision.author }}: файл"{{ decision.get_file_name }}"</a></p>
+                <p>
+                    {{ forloop.counter }}: Ученик {{ decision.author }}:
+                    <a href="{% url 'lab:download' pk=decision.id %}">файл"{{ decision.get_file_name }}"</a>
+                    сдан {{decision.time_create}}
+                </p>
             {% endfor %}
         {% else %}
             <p>По данной лабораторной пока не было отправлено ни одного отчета!!!</p>
