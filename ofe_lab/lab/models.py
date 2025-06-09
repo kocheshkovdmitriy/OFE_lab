@@ -10,12 +10,25 @@ class Grade(models.Model):
         verbose_name = 'Класс'
         verbose_name_plural = 'Классы'
 
+class Litter(models.Model):
+    name = models.CharField(max_length=5, verbose_name='литер')
+
+    def __str__(self):
+        return f'{self.name}'
+
+    class Meta:
+        verbose_name = 'Литер'
+        verbose_name_plural = 'Литеры'
+
 class Student(models.Model):
     grade = models.ForeignKey(Grade, verbose_name='класс', on_delete=models.CASCADE, related_name='students')
-    label = models.CharField(verbose_name='Литер', max_length=5)
+    label = models.ForeignKey(Litter,  verbose_name='литер', on_delete=models.CASCADE, related_name='students', blank=True)
     first_name = models.CharField(verbose_name='Имя', max_length=50)
     second_name = models.CharField(verbose_name='Отчество', max_length=50)
     last_name = models.CharField(verbose_name='Фамилия', max_length=50)
+
+    def __str__(self):
+        return f'{self.last_name} {self.first_name[0].upper()}. {self.second_name[0].upper()}.'
 
 
 class Work(models.Model):
