@@ -19,7 +19,8 @@ class AllWorks(generic.ListView):
     model = models.Work
 
     def get_queryset(self):
-        qs = models.Work.objects.filter(grade=int(self.request.GET['grade']))
+        qs = models.Work.objects.filter(
+            grade_id=models.Grade.objects.get(name=int(self.request.GET['grade'])))
         return qs
 
     def get_context_data(self, **kwargs):

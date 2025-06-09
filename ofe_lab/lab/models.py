@@ -1,7 +1,7 @@
 from django.db import models
 
 class Grade(models.Model):
-    name = models.CharField(verbose_name='класс', max_length=20)
+    name = models.IntegerField(verbose_name='класс')
 
     def __str__(self):
         return f'{self.name}'
@@ -12,6 +12,7 @@ class Grade(models.Model):
 
 class Student(models.Model):
     grade = models.ForeignKey(Grade, verbose_name='класс', on_delete=models.CASCADE, related_name='students')
+    label = models.CharField(verbose_name='Литер', max_length=5)
     first_name = models.CharField(verbose_name='Имя', max_length=50)
     second_name = models.CharField(verbose_name='Отчество', max_length=50)
     last_name = models.CharField(verbose_name='Фамилия', max_length=50)
