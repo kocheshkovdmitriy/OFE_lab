@@ -27,6 +27,10 @@ class Student(models.Model):
     second_name = models.CharField(verbose_name='Отчество', max_length=50)
     last_name = models.CharField(verbose_name='Фамилия', max_length=50)
 
+    class Meta:
+        verbose_name = 'Ученик'
+        verbose_name_plural = 'Ученики'
+
     def __str__(self):
         return f'{self.last_name} {self.first_name[0].upper()}. {self.second_name[0].upper()}.'
 

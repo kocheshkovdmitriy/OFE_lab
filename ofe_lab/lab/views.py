@@ -35,18 +35,33 @@ class Work(generic.DetailView):
         return [f'lab/{w.grade}/{w.url}']
 
     def get_context_data(self, **kwargs):
-        form = forms.UploadFileForm()
-        return super(Work, self).get_context_data(form=form)
+        if self.request.GET.get('choice', None):
+            form_class = forms.ChoiceClass(self.request.GET)
+            form_protocol = forms.UploadFileForm(
+                grade=self.request.GET.get('grade', None),
+                lit=self.request.GET.get('litter', None))
+            return super(Work, self).get_context_data(
+                form_class=form_class,
+                form_protocol=form_protocol,
+                flag=True
+            )
+        else:
+            form_class = forms.ChoiceClass()
+            return super(Work, self).get_context_data(
+                form_class=form_class,
+                flag=False
+            )
 
     def post(self, *args, **kwargs):
+        print(self.request.POST)
         work = models.Work.objects.get(id=kwargs['pk'])
-        form = forms.UploadFileForm(self.request.POST, self.request.FILES)
-        if form.is_valid():
-            author = self.request.POST['author']
+        form_protocol = forms.UploadFileForm(self.request.POST, self.request.FILES)
+        if form_protocol.is_valid():
+            '''author = self.request.POST['author']
             file = self.request.FILES['file']
             decision = models.Decision(work=work, author=author, file=file)
-            decision.save()
-        context = {'work': work, 'result': True, 'form': form}
+            decision.save()'''
+        context = {'work': work, 'result': True, 'form': form_protocol}
         return render(request=self.request,
                       template_name=f'lab/{work.grade}/{work.url}',
                       context=context)

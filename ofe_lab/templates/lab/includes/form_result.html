@@ -1,6 +1,20 @@
-    <form action="" method="post" enctype="multipart/form-data">
+    <p>Оптравить протокол по лабораторной работе</p>
+    <form action="" method="get">
         {% csrf_token %}
-        <p>Оптравить протокол по лабораторной работе</p>
-        {{ form.as_p }}
-        <button type="submit">Отправить</button></p>
+        {{ form_class.as_p }}
+        <input type="hidden" name="id" value={{work.pk}}>
+        <input type="hidden" name="choice" value={{work.pk}}>
+        {%if flag%}
+            <button type="submit">Изменить класс</button></p>
+        {%else%}
+            <button type="submit">Выбрать класс</button></p>
+        {%endif%}
     </form>
+
+    {%if flag%}
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form_protocol.as_p }}
+            <button type="submit">Отправить</button></p>
+        </form>
+    {%endif%}
