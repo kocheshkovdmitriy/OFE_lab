@@ -56,12 +56,13 @@ class Work(generic.DetailView):
         print(self.request.POST)
         work = models.Work.objects.get(id=kwargs['pk'])
         form_protocol = forms.UploadFileForm(self.request.POST, self.request.FILES)
-        if form_protocol.is_valid():
-            '''author = self.request.POST['author']
+        if self.request.FILES['file'] and self.request.POST.get('students'):
+            print("форма валидна")
+            author = models.Student.objects.get(id=self.request.POST.get('students'))
             file = self.request.FILES['file']
-            decision = models.Decision(work=work, author=author, file=file)
-            decision.save()'''
-        context = {'work': work, 'result': True, 'form': form_protocol}
+            protocol = models.Protocol(work=work, author=author, file=file)
+            protocol.save()
+        context = {'work': work, 'result': True, 'form_protocol': form_protocol}
         return render(request=self.request,
                       template_name=f'lab/{work.grade}/{work.url}',
                       context=context)
