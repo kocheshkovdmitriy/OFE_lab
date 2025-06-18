@@ -1,20 +1,16 @@
     <p>Оптравить протокол по лабораторной работе</p>
-    <form action="" method="get">
+    <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form_class.as_p }}
-        <input type="hidden" name="id" value={{work.pk}}>
-        <input type="hidden" name="choice" value={{work.pk}}>
         {%if flag%}
-            <button type="submit">Изменить класс</button></p>
+            <button type="submit" name="button1" value="True">Изменить класс</button></p>
+            {{ form_protocol.as_p }}
+            <button type="submit"  name="button2" value="True">Отправить</button></p>
         {%else%}
-            <button type="submit">Выбрать класс</button></p>
+            <button type="submit"  name="button1" value="True">Выбрать класс</button></p>
+        {%endif%}
+        {%if result%}
+            <p>протокол успешно сохранен! Обратитесь к преподавателю, что бы он его подтвердил.</p>
         {%endif%}
     </form>
 
-    {%if flag%}
-        <form action="" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form_protocol.as_p }}
-            <button type="submit">Отправить</button></p>
-        </form>
-    {%endif%}

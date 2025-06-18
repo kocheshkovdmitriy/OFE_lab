@@ -35,37 +35,36 @@ class Work(generic.DetailView):
         return [f'lab/{w.grade}/{w.url}']
 
     def get_context_data(self, **kwargs):
-        if self.request.GET.get('choice', None):
-            form_class = forms.ChoiceClass(self.request.GET)
-            form_protocol = forms.UploadFileForm(
-                grade=self.request.GET.get('grade', None),
-                lit=self.request.GET.get('litter', None))
-            return super(Work, self).get_context_data(
-                form_class=form_class,
-                form_protocol=form_protocol,
-                flag=True
-            )
-        else:
-            form_class = forms.ChoiceClass()
-            return super(Work, self).get_context_data(
-                form_class=form_class,
-                flag=False
-            )
+        form_class = forms.ChoiceClass()
+        return super(Work, self).get_context_data(
+            form_class=form_class,
+            flag=False
+        )
 
     def post(self, *args, **kwargs):
         print(self.request.POST)
         work = models.Work.objects.get(id=kwargs['pk'])
-        form_protocol = forms.UploadFileForm(self.request.POST, self.request.FILES)
-        if self.request.FILES['file'] and self.request.POST.get('students'):
-            print("форма валидна")
-            author = models.Student.objects.get(id=self.request.POST.get('students'))
-            file = self.request.FILES['file']
-            protocol = models.Protocol(work=work, author=author, file=file)
-            protocol.save()
-        context = {'work': work, 'result': True, 'form_protocol': form_protocol}
+        form_class = forms.ChoiceClass(self.request.POST)
+        form_protocol = forms.UploadFileForm(
+            grade=self.request.POST.get('grade', None),
+            lit=self.request.POST.get('litter', None))
+        context = {'work': work, 'result': False, 'flag': True, 'form_class': form_class,
+                   'form_protocol': form_protocol}
+
+        if  self.request.POST.get('button2'):
+            if self.request.FILES.get('file') and self.request.POST.get('students'):
+                print("форма валидна")
+                author = models.Student.objects.get(id=self.request.POST.get('students'))
+                file = self.request.FILES['file']
+                protocol = models.Protocol(work=work, author=author, file=file)
+                protocol.save()
+                context['result']=True
+
+
         return render(request=self.request,
                       template_name=f'lab/{work.grade}/{work.url}',
                       context=context)
+
 
 class LoginView(generic.View):
     def get(self, request):

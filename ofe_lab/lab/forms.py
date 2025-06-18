@@ -9,9 +9,7 @@ class ChoiceClass(forms.Form):
     litter = forms.ChoiceField(choices=tuple((lit.id, lit.name) for lit in models.Litter.objects.all()), required=False, label='Литер')
 
 class UploadFileForm(forms.Form):
-    #CHOICES = tuple((st.id, st) for st in models.Student.objects.all())
-    #students = forms.ChoiceField(choices= CHOICES, required=False, label='Ученик')
-    file = forms.FileField(label="Файл")
+    file = forms.FileField(label="Файл", required=False,)
 
     def __init__(self, *args, grade=None, lit=None, **kwargs):
         super(UploadFileForm, self).__init__(*args, **kwargs)
