@@ -27,6 +27,9 @@ class Student(models.Model):
     second_name = models.CharField(verbose_name='Отчество', max_length=50)
     last_name = models.CharField(verbose_name='Фамилия', max_length=50)
 
+    def get_grade(self):
+        return f'{self.grade.name}{self.label.name}'
+
     class Meta:
         verbose_name = 'Ученик'
         verbose_name_plural = 'Ученики'

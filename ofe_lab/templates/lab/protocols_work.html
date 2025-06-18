@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %} Отчеты по лабораторной работе "{{decisions.first.work.name}}"  {% endblock%}
+{% block title %} Отчеты по лабораторной работе "{{protocols.first.work.name}}"  {% endblock%}
 
 {% block left_panel%}
 
@@ -10,13 +10,13 @@
 {% block content%}
     <h1>МБОУ "ЛИЦЕЙ №40"</h1>
     {% if request.user.is_authenticated %}
-        <h3>Сданные отчеты по лабораторной работе "{{decisions.first.work.name}}"</h3>
-        {% if decisions %}
-            {% for decision in decisions %}
+        <h3>Сданные отчеты по лабораторной работе "{{protocols.first.work.name}}"</h3>
+        {% if protocols %}
+            {% for protocol in protocols %}
                 <p>
-                    {{ forloop.counter }}: Ученик {{ decision.author }}:
-                    <a href="{% url 'lab:download' pk=decision.id %}">файл"{{ decision.get_file_name }}"</a>
-                    сдан {{decision.time_create}}
+                    {{ forloop.counter }}: Ученик {{ protocol.author }} класс {{protocol.author.get_grade}}:
+                    <a href="{% url 'lab:download' pk=protocol.id %}">файл"{{ protocol.get_file_name }}"</a>
+                    сдан {{protocol.time_create}}
                 </p>
             {% endfor %}
         {% else %}

@@ -90,8 +90,8 @@ class LoginView(generic.View):
         return render(request, 'lab/auth_user.html', context=context)
 
 class Protocols_work(generic.ListView):
-    template_name = 'lab/decisions_work.html'
-    context_object_name = 'decisions'
+    template_name = 'lab/protocols_work.html'
+    context_object_name = 'protocols'
     model = models.Protocol
 
     def get_queryset(self):
