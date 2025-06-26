@@ -1,3 +1,9 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} {{work.name}} {% endblock%}
+
+{% block content%}
 <h1>Лабораторная работа № 1</h1>
     <h2>Полый цилиндр на наклонной плоскости.</h2>
     <p><b>Цель работы:</b> </p>
@@ -28,3 +34,10 @@
         </ol>
     </p>
 <a href="{% url 'lab:mainpage' %}">вернуться на главную</a>
+
+{% endblock%}
+
+
+{% block left_panel%}
+    {% include 'lab/includes/form_result.html' %}
+{% endblock%}
