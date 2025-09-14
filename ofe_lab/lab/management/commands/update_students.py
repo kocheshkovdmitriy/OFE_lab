@@ -13,14 +13,27 @@ class Command(BaseCommand):
         print('Run custom command!')
         grade = self.__get_class(options['class'])
         litter = self.__get_litter(options['litter'])
-        print(grade, litter)
-        wb = load_workbook(filename='temp/' + options['file_name'])
-        for cell in wb['Лист1']:
-            if cell[0]:
-                print(cell[1].value.split())
+
+        if not (grade and litter):
+            print('Не найден класс или литер в базе данных')
+            print(grade, litter)
+        else:
+            wb = load_workbook(filename='temp/' + options['file_name'])
+
+            students = []
+            for cell in wb['Лист1']:
+                fio = cell[1].value.split()
+                students.append(models.Student(
+                    grade=grade,
+                    label=litter,
+                    first_name=fio[0],
+                    second_name=fio[1],
+                    last_name=fio[2]
+                ))
+            models.Student.objects.bulk_create(students)
 
     def __get_class(self, grade: int):
-        return models.Grade.objects.filter(name=grade)
+        return models.Grade.objects.filter(name=grade).first()
 
     def __get_litter(self, litter: str):
-        return models.Litter.objects.filter(name=litter)
+        return models.Litter.objects.filter(name=litter).first()
