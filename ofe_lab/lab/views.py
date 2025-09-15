@@ -4,6 +4,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views import generic
 from django.core.files.storage import FileSystemStorage
 
+from datetime import datetime
+
 from lab import models
 
 from lab import forms
@@ -56,6 +58,8 @@ class Work(generic.DetailView):
                 print("форма валидна")
                 author = models.Student.objects.get(id=self.request.POST.get('students'))
                 file = self.request.FILES['file']
+                file.name = f'{author.get_name()}_{work.get_number()}_{datetime.now().strftime("%d-%m-%Y_%H%M%S")}'
+                print('Имя сохраняемого файла:', file.name)
                 protocol = models.Protocol(work=work, author=author, file=file)
                 protocol.save()
                 context['result']=True

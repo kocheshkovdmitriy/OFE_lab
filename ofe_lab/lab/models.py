@@ -30,6 +30,9 @@ class Student(models.Model):
     def get_grade(self):
         return f'{self.grade.name}{self.label.name}'
 
+    def get_name(self):
+        return f'{self.last_name.capitalize()}_{self.first_name[0].upper()}.{self.second_name[0].upper()}'
+
     class Meta:
         verbose_name = 'Ученик'
         verbose_name_plural = 'Ученики'
@@ -43,6 +46,9 @@ class Work(models.Model):
     number = models.IntegerField(verbose_name='номер')
     name = models.CharField(verbose_name='название', max_length=240)
     url = models.CharField(verbose_name='url', max_length=240)
+
+    def get_number(self):
+        return f'{self.grade.name}-{self.number}'
 
     def __str__(self):
         return f'{self.grade} {self.number} {self.name}'
