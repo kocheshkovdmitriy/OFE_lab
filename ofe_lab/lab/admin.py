@@ -3,6 +3,13 @@ from django.contrib import admin
 from lab import models
 
 
+@admin.register(models.Grade)
+class Grade(admin.ModelAdmin):
+    list_display = ['name']
+
+@admin.register(models.Litter)
+class Litter(admin.ModelAdmin):
+    list_display = ['name']
 @admin.register(models.Protocol)
 class Protocols(admin.ModelAdmin):
     list_display = ['work', 'author', 'file', 'time_create', 'accepted']
