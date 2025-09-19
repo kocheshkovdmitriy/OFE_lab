@@ -58,7 +58,9 @@ class Work(generic.DetailView):
                 print("форма валидна")
                 author = models.Student.objects.get(id=self.request.POST.get('students'))
                 file = self.request.FILES['file']
-                file.name = f'{author.get_name()}_{work.get_number()}_{datetime.now().strftime("%d-%m-%Y_%H%M%S")}'
+                format = file.name[file.name.rfind('.'):]
+                print(format)
+                file.name = f'{author.get_name()}_{work.get_number()}_{datetime.now().strftime("%d-%m-%Y_%H%M%S")}{format}'
                 print('Имя сохраняемого файла:', file.name)
                 protocol = models.Protocol(work=work, author=author, file=file)
                 protocol.save()

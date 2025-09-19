@@ -22,13 +22,12 @@ class Command(BaseCommand):
 
             students = []
             for cell in wb['Лист1']:
-                fio = cell[1].value.split()
                 students.append(models.Student(
                     grade=grade,
                     label=litter,
-                    first_name=fio[0],
-                    second_name=fio[1],
-                    last_name=fio[2]
+                    first_name=cell[2].value,
+                    second_name=cell[3].value,
+                    last_name=cell[1].value
                 ))
             models.Student.objects.bulk_create(students)
 
