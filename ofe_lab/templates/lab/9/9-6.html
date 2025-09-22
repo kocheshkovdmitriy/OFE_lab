@@ -4,7 +4,16 @@
 {% block title %} {{work.name}} {% endblock%}
 
 {% block content%}
-    <h1>тут будет описание лабораторной работы 9-6</h1>
+    <h1>Лабораторная работа №</h1>
+    <h2>Название</h2>
+    <p><b>ЦЕЛЬ:</b> </p>
+    <p><b>ОБОРУДОВАНИЕ:</b> </p>
+    <ol> <b>Порядок выполнения работы.</b>
+        <li>	</li>
+        <li>	</li>
+        <li>	</li>
+    </ol>
+    <img src="{% static 'image/lab/9/1/9-1-1.jpg' %}" alt="описание">
     <a href="{% url 'lab:mainpage' %}">вернуться на главную</a>
 {% endblock%}
 
