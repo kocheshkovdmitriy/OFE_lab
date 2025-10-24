@@ -29,12 +29,10 @@ class AllWorks(generic.ListView):
         return super(AllWorks, self).get_context_data(grade=self.request.GET['grade'])
 
 class Work(generic.DetailView):
+    template_name = 'lab/detail_work.html'
     context_object_name = 'work'
     model = models.Work
 
-    def get_template_names(self):
-        w = models.Work.objects.filter(id=int(self.request.GET['id'])).first()
-        return [f'lab/{w.grade}/{w.url}']
 
     def get_context_data(self, **kwargs):
         form_class = forms.ChoiceClass()

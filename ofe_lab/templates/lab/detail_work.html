@@ -4,7 +4,7 @@
 {% block title %} {{work.name}} {% endblock%}
 
 {% block content%}
-    <div><iframe src="{% static 'lab/9/9-1.pdf' %}" style="width:1100px; height:600px;"></iframe></div>
+    <div><iframe src="{% static work.url %}" style="width:85vw; height:600px;"></iframe></div>
     <div><a href="{% url 'lab:mainpage' %}">вернуться на главную</a></div>
 {% endblock%}
 
