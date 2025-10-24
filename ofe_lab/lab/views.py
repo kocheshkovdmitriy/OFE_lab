@@ -66,7 +66,7 @@ class Work(generic.DetailView):
 
 
         return render(request=self.request,
-                      template_name=f'lab/{work.grade}/{work.url}',
+                      template_name='lab/detail_work.html',
                       context=context)
 
 
