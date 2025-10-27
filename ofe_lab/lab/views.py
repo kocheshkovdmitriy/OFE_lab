@@ -102,6 +102,7 @@ class Protocols_work(generic.ListView):
         qs = models.Protocol.objects.filter(work_id=int(self.request.GET['id']))
         return qs
 
+
 def download_file_view(request, pk):
     object = models.Protocol.objects.get(id=pk)
     return FileResponse(object.file.open(), as_attachment=True, filename=object.file.name)

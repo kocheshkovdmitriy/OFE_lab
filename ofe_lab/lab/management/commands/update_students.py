@@ -22,6 +22,7 @@ class Command(BaseCommand):
 
             students = []
             for cell in wb['Лист1']:
+                print([i.value for i in cell])
                 students.append(models.Student(
                     grade=grade,
                     label=litter,
