@@ -1,16 +1,63 @@
-    <p>Оптравить протокол по лабораторной работе</p>
-    <form action="" method="post" enctype="multipart/form-data">
+<div class="uploader" id="uploader">
+    <h2>Загрузка отчета</h2>
+    <form id="upload-form" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form_class.as_p }}
+        <div class="form-row">
+            <div class="input-group">
+                <label for="id_grade">Класс</label>
+                <select name="grade" id="id_grade" required>
+                    <option value="">Выберите класс</option>
+                    {% for cl in classes %}
+                        <option value="{{cl.id}}" {% if cl.id|lower == grade|lower %} selected {% endif %}>{{cl.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="id_letter">Буква</label>
+                <select name="letter" id="id_letter" required>
+                    <option id="letterOption" value="">Выберите букву</option>
+                    {% for let in letters %}
+                        <option value="{{let.id}}" {% if let.id|lower == letter|lower %} selected {% endif %}>{{let.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
         {%if flag%}
-            <button type="submit" name="button1" value="True">Изменить класс</button></p>
-            {{ form_protocol.as_p }}
-            <button type="submit"  name="button2" value="True">Отправить</button></p>
+            <button type="submit" class="submit-btn" name="button1" value="True">
+                <span class="btn-text">Изменить класс</span>
+                <div class="spinner hidden" ></div>
+            </button>
+
+            <div class="input-group">
+                <label for="student-select">Ученик</label>
+                <select name="student" id="student-select">
+                    <option value="">Выберите ученика</option>
+                    {% for student in students %}
+                        <option value="{{student.id}}">{{student.get_name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+        <div>
+        <label for="id_file">Файл:</label>
+            <input type="file" name="file" id="id_file">
+        </div>
+
+            <button type="submit" class="submit-btn" name="button2" value="True">
+                <span class="btn-text">Отправить протокол</span>
+                <div class="spinner hidden" ></div>
+            </button>
         {%else%}
-            <button type="submit"  name="button1" value="True">Выбрать класс</button></p>
+            <button type="submit" class="submit-btn" name="button1" value="True">
+                <span class="btn-text">Выбрать класс</span>
+                <div class="spinner hidden" ></div>
+            </button>
         {%endif%}
         {%if result%}
             <p>протокол успешно сохранен! Обратитесь к преподавателю, что бы он его подтвердил.</p>
         {%endif%}
+
     </form>
+</div>
 

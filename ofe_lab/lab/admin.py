@@ -7,8 +7,8 @@ from lab import models
 class Grade(admin.ModelAdmin):
     list_display = ['name']
 
-@admin.register(models.Litter)
-class Litter(admin.ModelAdmin):
+@admin.register(models.Letter)
+class Letter(admin.ModelAdmin):
     list_display = ['name']
 @admin.register(models.Protocol)
 class Protocols(admin.ModelAdmin):

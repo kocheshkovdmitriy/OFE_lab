@@ -3,47 +3,82 @@
 <head>
     {% load static %}
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %} {% endblock%}</title>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
 </head>
 <body>
+    <header>
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo">
+                    <a href="{% url 'lab:mainpage' %}">
+                        <img src="{% static 'image/site_logo.png' %}" alt="" srcset="" width="100%">
+                    </a>
+                </div>
+                <span class="logo-text">Онлайн физический эксперимент</span>
+            </div>
+            <nav>
+                <ul class="grade-list">
+                    <li class="grade-dropdown">
+                        <span>Справочник</span>
+                        <div class="dropdown-content">
+                            <div class="lab-item" ><a href="#">Правила оформления работ</a></div>
+                            <div class="lab-item" ><a href="#">Погрешности. Обработка погрешностей</a></div>
+                            <div class="lab-item" ><a href="#">Справочные материалы</a></div>
+                        </div>
+                    </li>
+                    <li class="grade-dropdown" >
+                        <span>Лабораторные работы</span>
+                        <div class="dropdown-content">
+                            <div class="lab-item"><a href="{% url 'lab:allworks' %}?grade=5">5 класс</a></div>
+                            <div class="lab-item"><a href="{% url 'lab:allworks' %}?grade=6">6 класс</a></div>
+                            <div class="lab-item"><a href="{% url 'lab:allworks' %}?grade=7">7 класс</a></div>
+                            <div class="lab-item"><a href="{% url 'lab:allworks' %}?grade=8">8 класс</a></div>
+                            <div class="lab-item"><a href="{% url 'lab:allworks' %}?grade=9">9 класс</a></div>
+                            <div class="lab-item"><a href="{% url 'lab:allworks' %}?grade=10">10 класс</a></div>
+                            <div class="lab-item"><a href="{% url 'lab:allworks' %}?grade=11">11 класс</a></div>
+                        </div>
+                    </li>
 
-    <nav class="menu">
-        <div class="group">
-            <a href="{% url 'lab:mainpage' %}"><img class="logo" src="{% static 'image/site_logo.png' %}" alt="Логотип"></a>
-            <div class="group1">
-                <a href="#">Справочник</a>
-                <a href="{% url 'lab:allworks' %}?grade=5">5 класс</a>
-                <a href="{% url 'lab:allworks' %}?grade=6">6 класс</a>
-                <a href="{% url 'lab:allworks' %}?grade=7">7 класс</a>
-                <a href="{% url 'lab:allworks' %}?grade=8">8 класс</a>
-                <a href="{% url 'lab:allworks' %}?grade=9">9 класс</a>
-                <a href="{% url 'lab:allworks' %}?grade=10">10 класс</a>
-                <a href="{% url 'lab:allworks' %}?grade=11">11 класс</a>
+                    <li class="grade-dropdown">
+                        <span>Экспериментальные задачи</span>
+                        <div class="dropdown-content">
+                            <div class="lab-item" ><a href="#">Механика</a></div>
+                            <div class="lab-item" ><a href="#">Электричество</a></div>
+                            <div class="lab-item" ><a href="#">Оптика</a></div>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+            <div class="user-info">
+                <span>
+                    {% if request.user.is_authenticated %}
+                        <p>Преподаватель | <a href="{% url 'lab:logout' %}">выйти</a></p>
+                    {% else %}
+                        <p>Ученик | <a href="{% url 'lab:login' %}">войти как преподадвтель</a></p>
+                    {% endif %}
+                </span>
             </div>
         </div>
-         <div class="group">
-            {% if request.user.is_authenticated %}
-                <p>Преподаватель | <a href="{% url 'lab:logout' %}">выйти</a></p>
-            {% else %}
-                <p>Ученик | <a href="{% url 'lab:login' %}">войти как преподадвтель</a></p>
-            {% endif %}
-        </div>
-    </nav>
-    <div class="main-container">
-        <div class="left-panel">
-            {% block left_panel%}
-
-            {% endblock%}
-        </div>
-        <div>
-            {% block content%}
-
-            {% endblock%}
+    </header>
+    
+    <main>
+        <div class="uploader" id="uploader">
+            {% block left_panel%}{% endblock%}
         </div>
 
-    </div>
+        <div class="viewer-container" id="viewer-container">
+            {% block content%}{% endblock%}
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 ОФЭ - Онлайн Физический Эксперимент</p>
+        </div>
+    </footer>
 
 </body>
 </html>

@@ -35,29 +35,31 @@ class Work(generic.DetailView):
 
 
     def get_context_data(self, **kwargs):
-        form_class = forms.ChoiceClass()
         return super(Work, self).get_context_data(
-            form_class=form_class,
+            classes=models.Grade.objects.all(),
+            letters=models.Letter.objects.all(),
+            grade=None,
+            letter=None,
             flag=False
         )
 
     def post(self, *args, **kwargs):
         print(self.request.POST)
+        print(self.request.FILES)
         work = models.Work.objects.get(id=kwargs['pk'])
-        form_class = forms.ChoiceClass(self.request.POST)
-        form_protocol = forms.UploadFileForm(
-            grade=self.request.POST.get('grade', None),
-            lit=self.request.POST.get('litter', None))
-        context = {'work': work, 'result': False, 'flag': True, 'form_class': form_class,
-                   'form_protocol': form_protocol}
-
-        if  self.request.POST.get('button2'):
-            if self.request.FILES.get('file') and self.request.POST.get('students'):
+        grade = self.request.POST.get('grade', None)
+        let = self.request.POST.get('letter', None)
+        context = {'work': work,
+                   'letters': models.Letter.objects.all(),
+                   'classes': models.Grade.objects.all(),
+                   'students': models.Student.objects.filter(grade_id=grade, label_id=let),
+                   'result': False, 'flag': True, 'grade': grade, 'letter': let, }
+        if self.request.POST.get('button2'):
+            if self.request.FILES.get('file') and self.request.POST.get('student'):
                 print("форма валидна")
-                author = models.Student.objects.get(id=self.request.POST.get('students'))
+                author = models.Student.objects.get(id=self.request.POST.get('student'))
                 file = self.request.FILES['file']
                 format = file.name[file.name.rfind('.'):]
-                print(format)
                 file.name = f'{author.get_name()}_{work.get_number()}_{datetime.now().strftime("%d-%m-%Y_%H%M%S")}{format}'
                 print('Имя сохраняемого файла:', file.name)
                 protocol = models.Protocol(work=work, author=author, file=file)

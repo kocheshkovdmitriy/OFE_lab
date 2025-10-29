@@ -10,7 +10,7 @@ class Grade(models.Model):
         verbose_name = 'Класс'
         verbose_name_plural = 'Классы'
 
-class Litter(models.Model):
+class Letter(models.Model):
     name = models.CharField(max_length=5, verbose_name='литер')
 
     def __str__(self):
@@ -22,7 +22,7 @@ class Litter(models.Model):
 
 class Student(models.Model):
     grade = models.ForeignKey(Grade, verbose_name='класс', on_delete=models.CASCADE, related_name='students')
-    label = models.ForeignKey(Litter,  verbose_name='литер', on_delete=models.CASCADE, related_name='students', blank=True)
+    label = models.ForeignKey(Letter,  verbose_name='литер', on_delete=models.CASCADE, related_name='students', blank=True)
     first_name = models.CharField(verbose_name='Имя', max_length=50)
     second_name = models.CharField(verbose_name='Отчество', max_length=50)
     last_name = models.CharField(verbose_name='Фамилия', max_length=50)
