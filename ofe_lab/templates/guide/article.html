@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} {{article.name}} {% endblock%}
+
+{% block content%}
+
+    <div id="viewer">
+        <iframe src="{% static article.path_to_file %}" style="width:60vw; height:600px;"></iframe>
+    </div>
+
+
+{% endblock%}
+
+
+{% block left_panel%}
+    <ul> Выбор статьи:
+        {% for article in articles %}
+        <li><a href="{% url 'guide:article' pk=article.pk%}">{{article.name}}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock%}

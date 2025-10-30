@@ -16,6 +16,9 @@ class Article(models.Model):
     name = models.CharField(max_length=200, verbose_name='название')
     path_to_file = models.CharField(max_length=200, verbose_name='путь к файлу')
 
+    def __str__(self):
+        return f'Раздел {self.section.id}: {self.name}'
+
     class Meta:
         verbose_name = 'Статья'
         verbose_name_plural = 'Статьи'
