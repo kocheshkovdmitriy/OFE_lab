@@ -131,6 +131,8 @@ celerybeat.pid
 .idea
 .env
 .venv
+ofe_lab/db.sqlite3
+ofe_lab/temp/
 env/
 venv/
 ENV/
