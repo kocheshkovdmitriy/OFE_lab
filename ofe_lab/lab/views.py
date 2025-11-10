@@ -22,7 +22,7 @@ class AllWorks(generic.ListView):
 
     def get_queryset(self):
         qs = models.Work.objects.filter(
-            grade_id=models.Grade.objects.get(name=int(self.request.GET['grade'])))
+            grade_id=models.Grade.objects.get(name=int(self.request.GET['grade']))).order_by('number')
         return qs
 
     def get_context_data(self, **kwargs):
