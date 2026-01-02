@@ -8,9 +8,9 @@ urlpatterns = [
     path('', views.Mainpage.as_view(), name='mainpage'),
     path('allworks', views.AllWorks.as_view(), name='allworks'),
     path('work/<pk>/', views.Work.as_view(), name='work'),
-    path('decisions_work', views.Protocols_work.as_view(), name='decisions_work'),
 
-    path('decision/download/<pk>', views.download_file_view, name='download'),
+    path('protocols_work/<pk>', views.Protocols_work.as_view(), name='protocols_work'),
+    path('protocols/download/<pk>', views.download_file_view, name='download'),
 
     path('login/', views.LoginView.as_view(), name='login'),
     path('logout/', views.logout_view, name='logout'),

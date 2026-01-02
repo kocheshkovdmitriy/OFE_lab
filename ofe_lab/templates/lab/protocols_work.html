@@ -3,14 +3,10 @@
 
 {% block title %} Отчеты по лабораторной работе "{{protocols.first.work.name}}"  {% endblock%}
 
-{% block left_panel%}
-
-{% endblock%}
-
 {% block content%}
-    <h1>МБОУ "ЛИЦЕЙ №40"</h1>
+    <h2 id="viewer-title"><a href="{% url 'lab:allworks' %}?grade=9">Вернуться к списку работ</a></h2>
     {% if request.user.is_authenticated %}
-        <h3>Сданные отчеты по лабораторной работе "{{protocols.first.work.name}}"</h3>
+        <h3>Сданные отчеты по лабораторной работе "{{work.name}}"</h3>
         {% if protocols %}
             {% for protocol in protocols %}
                 <p>
@@ -21,10 +17,14 @@
             {% endfor %}
         {% else %}
             <p>По данной лабораторной пока не было отправлено ни одного отчета!!!</p>
-            <p><img class="main-img" src="{% static 'image/hnik_hnik.jpg' %}" alt="Класная картинка"></p>
+            <p><img class="main-img" src="{% static 'image/hnik_hnik.jpg' %}" alt="Класная картинка" width="30%"></p>
         {% endif %}
     {% else %}
         <p>Просмотр сданных отчетов доступен только авторизированному преподователю!!!!</p>
     {% endif %}
     <a href="{% url 'lab:mainpage' %}">вернуться на главную</a>
 {% endblock%}
+
+{% block left_panel %}
+    {% include 'lab/includes/filter_protocols.html' %}
+{% endblock %}

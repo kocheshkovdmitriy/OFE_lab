@@ -2,12 +2,11 @@ from django.contrib.auth import logout, login, authenticate
 from django.http import FileResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import generic
-from django.core.files.storage import FileSystemStorage
+
 
 from datetime import datetime
 
 from lab import models
-
 from lab import forms
 
 
@@ -95,14 +94,44 @@ class LoginView(generic.View):
         context = {'form': form}
         return render(request, 'lab/auth_user.html', context=context)
 
-class Protocols_work(generic.ListView):
-    template_name = 'lab/protocols_work.html'
-    context_object_name = 'protocols'
-    model = models.Protocol
 
-    def get_queryset(self):
-        qs = models.Protocol.objects.filter(work_id=int(self.request.GET['id']))
-        return qs
+class Protocols_work(generic.View):
+    def get(self, request, **kwargs):
+        context=self.get_context_data(**kwargs)
+        return render(request=request, template_name='lab/protocols_work.html', context=context)
+
+    def post(self, request, **kwargs):
+        context = self.get_context_data(**kwargs)
+        return render(request=request, template_name='lab/protocols_work.html', context=context)
+
+    def get_queryset(self, **kwargs):
+        print(self.request.POST)
+        if self.request.POST.get('button1'):
+            return models.Protocol.objects.filter(work_id=int(kwargs.get('pk')),
+                                                  author__in=models.Student.objects.filter(
+                                                      grade_id=int(self.request.POST.get('grade')),
+                                                      label_id=int(self.request.POST.get('letter')))
+                                                  )
+        if self.request.POST.get('button2') and self.request.POST.get('student'):
+            return models.Protocol.objects.filter(work_id=int(kwargs.get('pk')), author_id=int(self.request.POST.get('student')))
+        return models.Protocol.objects.filter(work_id=int(kwargs.get('pk')))
+
+    def get_context_data(self, **kwargs):
+        context = {
+            'protocols': self.get_queryset(**kwargs),
+            'work': models.Work.objects.get(id=int(kwargs.get('pk'))),
+            'classes': models.Grade.objects.all(),
+            'letters': models.Letter.objects.all(),
+            'grade': self.request.POST.get('grade'),
+            'letter': self.request.POST.get('letter'),
+            'student': self.request.POST.get('student'),
+            'flag': self.request.POST.get('button1', False) or self.request.POST.get('button2', False),
+            }
+        if self.request.POST.get('grade') and self.request.POST.get('letter'):
+            context['students'] = models.Student.objects.filter(
+                                                      grade_id=int(self.request.POST.get('grade')),
+                                                      label_id=int(self.request.POST.get('letter')))
+        return context
 
 
 def download_file_view(request, pk):
