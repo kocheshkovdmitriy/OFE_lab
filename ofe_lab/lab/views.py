@@ -108,13 +108,14 @@ class Protocols_work(generic.View):
         print(self.request.POST)
         if self.request.POST.get('button1'):
             return models.Protocol.objects.filter(work_id=int(kwargs.get('pk')),
+                                                  accepted=True,
                                                   author__in=models.Student.objects.filter(
                                                       grade_id=int(self.request.POST.get('grade')),
                                                       label_id=int(self.request.POST.get('letter')))
                                                   )
         if self.request.POST.get('button2') and self.request.POST.get('student'):
-            return models.Protocol.objects.filter(work_id=int(kwargs.get('pk')), author_id=int(self.request.POST.get('student')))
-        return models.Protocol.objects.filter(work_id=int(kwargs.get('pk')))
+            return models.Protocol.objects.filter(work_id=int(kwargs.get('pk')), author_id=int(self.request.POST.get('student')), accepted=True)
+        return models.Protocol.objects.filter(work_id=int(kwargs.get('pk')), accepted=True)
 
     def get_context_data(self, **kwargs):
         context = {
@@ -142,3 +143,31 @@ def download_file_view(request, pk):
 def logout_view(request):
     logout(request)
     return redirect('/')
+
+
+class Accept_protokols(generic.View):
+    def get(self, request, **kwargs):
+        context = self.get_context_data(**kwargs)
+        return render(request=request,
+                      template_name='lab/accept_protocols.html',
+                      context=context)
+
+    def get_queryset(self, **kwargs):
+        return models.Protocol.objects.filter(accepted=False)
+
+    def get_context_data(self, **kwargs):
+        return {
+            'protocols': self.get_queryset(**kwargs)
+        }
+
+
+def edit_protocol(request, pk):
+    protocol = models.Protocol.objects.get(id=int(pk))
+    protocol.accepted = True
+    protocol.save()
+    return redirect('/protocols_accept/')
+
+def delete_protocol(request, pk):
+    protocol = models.Protocol.objects.get(id=int(pk))
+    protocol.delete()
+    return redirect('/protocols_accept/')

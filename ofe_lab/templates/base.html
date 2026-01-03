@@ -49,6 +49,17 @@
                             <div class="lab-item" ><a href="#">Оптика</a></div>
                         </div>
                     </li>
+
+                    <li class="grade-dropdown">
+                        {% if request.user.is_authenticated %}
+                            <span>Протоколы</span>
+                                <div class="dropdown-content">
+                                    <div class="lab-item" ><a href="#">Протоколы по классам</a></div>
+                                    <div class="lab-item" ><a href="{% url 'lab:protocols_accept' %}">Протоколы на проверку</a></div>
+                                </div>
+                        {% endif %}
+
+                    </li>
                 </ul>
             </nav>
             <div class="user-info">

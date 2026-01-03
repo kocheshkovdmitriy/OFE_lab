@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Сданные протоколы {% endblock%}
+
+{% block content%}
+    {% if request.user.is_authenticated %}
+        <h3>Сданные протоколы на проверку:</h3>
+        {% if protocols %}
+            {% for protocol in protocols %}
+                <p>
+                    {{ forloop.counter }}: Ученик {{ protocol.author }} класс {{protocol.author.get_grade}}:
+                    <a href="{% url 'lab:download' pk=protocol.id %}">файл"{{ protocol.get_file_name }}"</a>
+                    сдан {{protocol.time_create}}
+                    <a href="{% url 'lab:protocol_edit' pk=protocol.id %}">принять</a>
+                    <a href="{% url 'lab:protocol_delete' pk=protocol.id %}">удалить</a>
+                </p>
+            {% endfor %}
+        {% else %}
+            <p>Пока небыло отправлено ни одного протокола на проверку!!!</p>
+            <p><img class="main-img" src="{% static 'image/hnik_hnik.jpg' %}" alt="Класная картинка" width="30%"></p>
+        {% endif %}
+    {% else %}
+        <p>Просмотр сданных протоколов доступен только авторизированному преподователю!!!!</p>
+    {% endif %}
+    <a href="{% url 'lab:mainpage' %}">вернуться на главную</a>
+{% endblock%}
+
+{% block left_panel %}
+{% endblock %}
