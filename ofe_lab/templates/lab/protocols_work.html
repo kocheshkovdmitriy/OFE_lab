@@ -6,7 +6,7 @@
 {% block content%}
     <h2 id="viewer-title"><a href="{% url 'lab:allworks' %}?grade=9">Вернуться к списку работ</a></h2>
     {% if request.user.is_authenticated %}
-        <h3>Сданные отчеты по лабораторной работе "{{work.name}}"</h3>
+        <h3>Сданные протоколы по лабораторной работе "{{work.name}}"</h3>
         {% if protocols %}
             {% for protocol in protocols %}
                 <p>
