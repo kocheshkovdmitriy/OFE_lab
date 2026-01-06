@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %} Отчеты по лабораторной работе "{{protocols.first.work.name}}"  {% endblock%}
+{% block title %} Протоколы по лабораторной работе "{{protocols.first.work.name}}"  {% endblock%}
 
 {% block content%}
-    <h2 id="viewer-title"><a href="{% url 'lab:allworks' %}?grade=9">Вернуться к списку работ</a></h2>
+    <h2 id="viewer-title"><a href="{% url 'lab:allworks' %}?grade={{work.grade}}">Вернуться к списку работ</a></h2>
     {% if request.user.is_authenticated %}
         <h3>Сданные протоколы по лабораторной работе "{{work.name}}"</h3>
         {% if protocols %}

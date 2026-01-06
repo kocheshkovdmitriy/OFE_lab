@@ -171,3 +171,41 @@ def delete_protocol(request, pk):
     protocol = models.Protocol.objects.get(id=int(pk))
     protocol.delete()
     return redirect('/protocols_accept/')
+
+
+class Protocols_for_class(generic.View):
+    def get(self, request, **kwargs):
+        table_data = self.create_table_protocols()
+        context = {
+            'classes': models.Grade.objects.all(),
+            'letters': models.Letter.objects.all(),
+            'grade': self.request.GET.get('grade'),
+            'letter': self.request.GET.get('letter'),
+        }
+        context.update(table_data)
+        #print(context)
+        return render(
+            request=request,
+            template_name='lab/protocols_for_class.html',
+            context=context
+        )
+    def create_table_protocols(self):
+        table = {}
+        works = {}
+        work_protokols = {}
+        choice_grade = None
+        if self.request.GET.get('grade') and self.request.GET.get('letter'):
+
+            choice_grade = f"{models.Grade.objects.get(id=int(self.request.GET.get('grade')))}{models.Letter.objects.get(id=int(self.request.GET.get('letter')))}"
+
+            for work in models.Work.objects.filter(grade_id=int(self.request.GET.get('grade'))):
+                works[work.id] = work.name
+                work_protokols[work.id] = None
+
+            for student in models.Student.objects.filter(grade_id=int(self.request.GET.get('grade')), label_id=int(self.request.GET.get('letter'))):
+                table[student.get_name()] = work_protokols.copy()
+                for protocol in student.protocols.all().filter(accepted=True):
+                    table[student.get_name()][protocol.work.id] = protocol.id
+        #print(*[f'{s}:{table[s]}' for s in table], sep='\n')
+        return {'table': table, 'works': works, 'choice_grade': choice_grade}
+

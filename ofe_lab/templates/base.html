@@ -10,14 +10,15 @@
 <body>
     <header>
         <div class="header-content">
-            <div class="logo-section">
-                <div class="logo">
-                    <a href="{% url 'lab:mainpage' %}">
+            <a href="{% url 'lab:mainpage' %}" style="text-decoration: none;">
+                <div class="logo-section">
+                    <div class="logo">
                         <img src="{% static 'image/site_logo.png' %}" alt="" srcset="" width="100%">
-                    </a>
+
+                    </div>
+                    <span class="logo-text">Основы физического эксперимента</span>
                 </div>
-                <span class="logo-text">Основы физического эксперимента</span>
-            </div>
+            </a>
             <nav>
                 <ul class="grade-list">
                     <li class="grade-dropdown">
@@ -54,7 +55,7 @@
                         {% if request.user.is_authenticated %}
                             <span>Протоколы</span>
                                 <div class="dropdown-content">
-                                    <div class="lab-item" ><a href="#">Протоколы по классам</a></div>
+                                    <div class="lab-item" ><a href="{% url 'lab:protocols_for_class' %}">Протоколы по классам</a></div>
                                     <div class="lab-item" ><a href="{% url 'lab:protocols_accept' %}">Протоколы на проверку</a></div>
                                 </div>
                         {% endif %}
