@@ -133,6 +133,7 @@ celerybeat.pid
 .venv
 ofe_lab/db.sqlite3
 ofe_lab/temp/
+ofe_lab/uploads/
 env/
 venv/
 ENV/
