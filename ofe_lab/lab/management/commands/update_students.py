@@ -3,7 +3,10 @@ from openpyxl import load_workbook
 from lab import models
 
 class Command(BaseCommand):
-    help = 'Fill in the database with students'
+    help = '''Заполнение базы данных учениками. 
+              python manage.py update_students file_name class letter
+              file_name таблица с учениками класса в формате .xlsx в папке temp/
+              по столбцам: номер/фамилия/имя/отчество'''
 
     def add_arguments(self, parser):
         parser.add_argument('file_name', type=str, help='Имя файла со списком учеников класса')
