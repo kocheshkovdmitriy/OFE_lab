@@ -4,25 +4,30 @@
 {% block title %} Сданные протоколы класс   {% endblock%}
 
 {% block content%}
+{% if choice_grade %}
 
-<table>
-  <caption class="logo-text">
+
+  <h2 class="logo-text">
     Протоколы по лабораторным работам сданные в {{choice_grade}} классе.
-  </caption>
+  </h2>
+<div class="veiwer-tabl">
+<table>
+
   <thead>
     <tr>
-      <th scope="col">Учащийся </th>
+      <th scope="col" class="first-col">Учащийся </th>
         {% for k,v in works.items %}
             <th scope="col">{{v}}</th>
         {% endfor %}
 
     </tr>
   </thead>
+
   <tbody>
 
     {% for student, protocols in table.items %}
         <tr>
-            <th scope="row">{{student}}</th>
+            <th scope="row" class="first-col">{{student}}</th>
             {% for key, protocol in protocols.items %}
                 <td>
                     {% if protocol %}
@@ -36,7 +41,13 @@
     {% endfor %}
 
   </tbody>
-
+</table>
+</div>
+{% else %}
+    <h2 class="logo-text">
+       Выберите класс для просмотра сданных протоколов.
+    </h2>
+{% endif %}
 {% endblock%}
 
 {% block left_panel %}
